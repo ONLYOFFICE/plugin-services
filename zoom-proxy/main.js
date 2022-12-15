@@ -2,6 +2,7 @@ const AWSXRay = require('aws-xray-sdk-core')
 const AWS = AWSXRay.captureAWS(require('aws-sdk'))
 const needle = require('needle');
 
+
 // Handler
 exports.handler = async function(event, context) {
   const options = {
@@ -10,20 +11,26 @@ exports.handler = async function(event, context) {
 		}
 	};
 
-	try {
-		options["headers"]["Authorization"] = event["Authorization"];
-		let method = event["method"];
-		let targetUrl = "https://api.zoom.us/v2/users/" + event["endPoint"];
+	if (!event.body) {
+		return "Invalid body";
+	}
 
-		delete event["endPoint"];
-		delete event["Authorization"];
-		delete event["method"];
+	try {
+		let data = JSON.parse(event.body);
+
+		options["headers"]["Authorization"] = data["Authorization"];
+		let method = data["method"];
+		let targetUrl = "https://api.zoom.us/v2/users/" + data["endPoint"];
+
+		delete data["endPoint"];
+		delete data["Authorization"];
+		delete data["method"];
 		
 		if (!targetUrl || !method || !options["headers"]["Authorization"]) {
 			return "Error of request";
 		}
 		
-		needle(method, targetUrl, event, options)
+		needle(method, targetUrl, data, options)
 			.then((target_response) => {
 				console.log(`Status: ${target_response.statusCode}`);
 				console.log('Body: ', target_response.body);

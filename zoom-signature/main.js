@@ -1,14 +1,26 @@
 const AWSXRay = require('aws-xray-sdk-core')
 const AWS = AWSXRay.captureAWS(require('aws-sdk'))
 const needle = require('needle');
+const KJUR = require('jsrsasign');
 
 // Handler
 exports.handler = async function(event, context) {
 	let SDK_KEY, SDK_SECRET, meet_number, role_id;
-	SDK_KEY = event["sdk_key"];
-	SDK_SECRET = event["sdk_secret"];
-	meet_number = event["meet_number"];
-	role_id = event["role_id"];
+	if (!event.body) {
+		return "Invalid body";
+	}
+
+	let data;
+	try {
+		data = JSON.parse(event.body);
+	}
+	catch (err) {
+		return "Invalid body";
+	}
+	SDK_KEY = data["sdk_key"];
+	SDK_SECRET = data["sdk_secret"];
+	meet_number = data["meet_number"];
+	role_id = data["role_id"];
 
 	if (SDK_KEY && SDK_SECRET && meet_number && role_id != undefined) {
 		return generateSignature(SDK_KEY, SDK_SECRET, meet_number, role_id);
