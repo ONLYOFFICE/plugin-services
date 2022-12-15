@@ -1,0 +1,19 @@
+{
+  "name": "prozy-zoom",
+  "version": "0.1.0",
+  "description": "Zoom proxy",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "Nikita-Khromov",
+  "license": "MIT",
+  "dependencies": {
+    "needle": "^3.1.0",
+    "aws-xray-sdk-core": "^3.4.0",
+    "aws-sdk": "^2.1275.0"
+  },
+  "engines": {
+    "node": "14.x"
+  }
+}
