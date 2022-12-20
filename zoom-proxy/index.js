@@ -10,13 +10,13 @@ exports.handler = async function(event, context) {
 			"content-type": 'application/json'
 		}
 	};
-
-	if (!event.body) {
-		return "Invalid body";
+    let request = event.Records[0].cf.request;
+	if (!request.body) {
+		return "No body prop";
 	}
 
 	try {
-		let data = JSON.parse(event.body);
+		let data = JSON.parse(request.body);
 
 		options["headers"]["Authorization"] = data["Authorization"];
 		let method = data["method"];
