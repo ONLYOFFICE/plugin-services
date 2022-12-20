@@ -10,13 +10,12 @@ exports.handler = async function(event, context) {
 			"content-type": 'application/json'
 		}
 	};
-    let request = event.Records[0].cf.request;
-	if (!request.body) {
-		return "No body prop";
+    if (!event["Records"][event["Records"].length - 1]["cf"]["request"]["body"]) {
+		return "Invalid body";
 	}
 
 	try {
-		let data = JSON.parse(request.body);
+		let data = JSON.parse(event["Records"][event["Records"].length - 1]["cf"]["request"]["body"]);
 
 		options["headers"]["Authorization"] = data["Authorization"];
 		let method = data["method"];
@@ -45,3 +44,31 @@ exports.handler = async function(event, context) {
 	}
 }
 
+try {
+	let data = JSON.parse(event["Records"][event["Records"].length - 1]["cf"]["request"]["body"]);
+
+	options["headers"]["Authorization"] = data["Authorization"];
+	let method = data["method"];
+	let targetUrl = "https://api.zoom.us/v2/users/" + data["endPoint"];
+
+	delete data["endPoint"];
+	delete data["Authorization"];
+	delete data["method"];
+	
+	if (!targetUrl || !method || !options["headers"]["Authorization"]) {
+		return "Error of request";
+	}
+	
+	needle(method, targetUrl, data, options)
+		.then((target_response) => {
+			console.log(`Status: ${target_response.statusCode}`);
+			console.log('Body: ', target_response.body);
+			response.statusText = JSON.stringify(target_response.body);
+			return JSON.stringify(target_response.body);
+		}).catch((err) => {
+			return JSON.stringify(err);
+	});
+}
+catch (err) {
+	return JSON.stringify(err);
+}

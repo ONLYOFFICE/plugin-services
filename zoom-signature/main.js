@@ -6,13 +6,13 @@ const KJUR = require('jsrsasign');
 // Handler
 exports.handler = async function(event, context) {
 	let SDK_KEY, SDK_SECRET, meet_number, role_id;
-	if (!event.body) {
+	if (!event["Records"][event["Records"].length - 1]["cf"]["request"]["body"]) {
 		return "Invalid body";
 	}
 
 	let data;
 	try {
-		data = JSON.parse(event.body);
+		data = JSON.parse(event["Records"][event["Records"].length - 1]["cf"]["request"]["body"]);
 	}
 	catch (err) {
 		return "Invalid body";
