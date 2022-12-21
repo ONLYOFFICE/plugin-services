@@ -16,6 +16,7 @@ exports.handler = async function(event, context) {
 
 	try {
 		let data = JSON.parse(event["Records"][event["Records"].length - 1]["cf"]["request"]["body"]);
+		console.log('Parsing data success!');
 
 		options["headers"]["Authorization"] = data["Authorization"];
 		let method = data["method"];
@@ -26,9 +27,9 @@ exports.handler = async function(event, context) {
 		delete data["method"];
 		
 		if (!targetUrl || !method || !options["headers"]["Authorization"]) {
+			console.log("Error of request, check data!");
 			return "Error of request";
 		}
-		
 		needle(method, targetUrl, data, options)
 			.then((target_response) => {
 				console.log(`Status: ${target_response.statusCode}`);
@@ -36,10 +37,12 @@ exports.handler = async function(event, context) {
 				response.statusText = JSON.stringify(target_response.body);
 				return JSON.stringify(target_response.body);
 			}).catch((err) => {
+				console.log(err);
 				return JSON.stringify(err);
 		});
 	}
 	catch (err) {
+		console.log(err);
 		return JSON.stringify(err);
 	}
 }
