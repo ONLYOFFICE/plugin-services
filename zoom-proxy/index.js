@@ -37,7 +37,6 @@ exports.handler = async function(event, context) {
 					.then((target_response) => {
 						console.log(`Status: ${target_response.statusCode}`);
 						console.log('Body: ', target_response.body);
-						response.statusText = JSON.stringify(target_response.body);
 						resolve(JSON.stringify(target_response.body));
 					}).catch((err) => {
 						console.log(err);
