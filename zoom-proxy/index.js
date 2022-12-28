@@ -11,14 +11,14 @@ exports.handler = async function(event, context) {
 			"content-type": 'application/json'
 		}
 	};
-    if (!event["Records"][event["Records"].length - 1]["cf"]["request"]["body"]) {
+    if (!event["body"]) {
 		return "Invalid body";
 	}
 	
 	function getPromise(event) {
 		return new Promise(function(resolve) {
 			try {
-				let data = JSON.parse(event["Records"][event["Records"].length - 1]["cf"]["request"]["body"]);
+				let data = JSON.parse(event["body"]);
 				console.log('Parsing data success!');
 		
 				options["headers"]["Authorization"] = data["Authorization"];
