@@ -1,0 +1,14 @@
+{
+    "name": "zoom",
+    "description": "zoom",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+    },
+    "devDependencies": {
+    },
+    "scripts": {
+        "postinstall": "(cd src/post-sign && npm install) && (cd ../post-proxy && npm install)"
+    }
+}
+
