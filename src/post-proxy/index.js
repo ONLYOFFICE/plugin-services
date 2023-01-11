@@ -2,8 +2,6 @@ const AWSXRay = require('aws-xray-sdk-core')
 const AWS = AWSXRay.captureAWS(require('aws-sdk'))
 const needle = require('needle');
 
-
-
 // Handler
 exports.handler = async function(event, context) {
   const options = {
@@ -18,13 +16,7 @@ exports.handler = async function(event, context) {
 	function getPromise(event) {
 		return new Promise(function(resolve) {
 			try {
-				console.log("!!! event !!!");
-				console.log(event);
-				console.log("!!! body !!!");
-				console.log(event["body"]);
 				let data = JSON.parse(event["body"]);
-				console.log('Parsing data success!');
-		
 				options["headers"]["Authorization"] = data["Authorization"];
 				let method = data["method"];
 				let targetUrl = "https://api.zoom.us/v2/users/" + data["endPoint"];
@@ -34,7 +26,6 @@ exports.handler = async function(event, context) {
 				delete data["method"];
 				
 				if (!targetUrl || !method || !options["headers"]["Authorization"]) {
-					console.log("Error of request, check data!");
 					resolve("Error of request");
 				}
 				needle(method, targetUrl, data, options)
