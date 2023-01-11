@@ -18,6 +18,10 @@ exports.handler = async function(event, context) {
 	function getPromise(event) {
 		return new Promise(function(resolve) {
 			try {
+				console.log("!!! event !!!");
+				console.log(event);
+				console.log("!!! body !!!");
+				console.log(event["body"]);
 				let data = JSON.parse(event["body"]);
 				console.log('Parsing data success!');
 		
