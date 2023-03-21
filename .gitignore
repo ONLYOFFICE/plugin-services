@@ -1,0 +1,4 @@
+.aws-sam
+src/*/node_modules/
+src/*/*.zip
+src/*/package-lock.json

@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "zoom"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-xii49d10mx49"
+s3_prefix = "zoom"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
