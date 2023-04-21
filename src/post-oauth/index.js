@@ -3,8 +3,8 @@ const AWS = AWSXRay.captureAWS(require('aws-sdk'))
 const needle = require('needle');
 
 // app credentials for OAuth zoom app.
-const client_id = "";
-const secret_id = "";
+const client_id = process.env.CLIENT_ID;
+const secret_id = process.env.CLIENT_SECRET;
 
 // Handler
 exports.handler = async function(event, context) {

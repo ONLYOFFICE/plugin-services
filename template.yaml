@@ -46,6 +46,10 @@ Resources:
       Runtime: nodejs18.x
       Architectures:
       - x86_64
+      Environment:
+        Variables:
+          CLIENT_ID: !Sub '{{resolve:secretsmanager:arn:aws:secretsmanager:us-east-1:997789372772:secret:zoomApi-LcwurZ:SecretString:sign_client_id}}'
+          CLIENT_SECRET: !Sub '{{resolve:secretsmanager:arn:aws:secretsmanager:us-east-1:997789372772:secret:zoomApi-LcwurZ:SecretString:sign_client_secret}}'
       MemorySize: 128
       Timeout: 100
       Events:
@@ -66,6 +70,10 @@ Resources:
       Runtime: nodejs18.x
       Architectures:
       - x86_64
+      Environment:
+        Variables:
+          CLIENT_ID: !Sub '{{resolve:secretsmanager:arn:aws:secretsmanager:us-east-1:997789372772:secret:zoomApi-LcwurZ:SecretString:oauth_client_id}}'
+          CLIENT_SECRET: !Sub '{{resolve:secretsmanager:arn:aws:secretsmanager:us-east-1:997789372772:secret:zoomApi-LcwurZ:SecretString:oauth_client_secret}}'
       MemorySize: 128
       Timeout: 100
       Events:
