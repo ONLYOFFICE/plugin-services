@@ -9,7 +9,7 @@ const secret_id = process.env.CLIENT_SECRET;
 
 // Handler
 exports.handler = async function(event, context) {
-	let meet_number, role_id, iat, exp;
+	let meet_number, role_id;
 	if (!event["body"]) {
 		return "Invalid body";
 	}
@@ -23,10 +23,8 @@ exports.handler = async function(event, context) {
 	}
 	meet_number	= data["meet_number"];
 	role_id		= data["role_id"];
-	iat			= data["iat"];
-	exp			= data["exp"];
 
-	if (client_id && secret_id && meet_number && role_id != undefined && iat != undefined && exp != undefined) {
+	if (client_id && secret_id && meet_number && role_id != undefined) {
 		return generateSignature(client_id, secret_id, meet_number, role_id);
 	}
 	else
@@ -35,6 +33,8 @@ exports.handler = async function(event, context) {
 
 function generateSignature(sdkKey, sdkSecret, meetingNumber, role, iat, exp) {
 
+	const iat		= Math.round(new Date().getTime() / 1000) - 30;
+  	const exp		= iat + 60 * 60 * 2;
 	const oHeader	= { alg: 'HS256', typ: 'JWT' }
   
 	const oPayload = {
@@ -45,6 +45,8 @@ function generateSignature(sdkKey, sdkSecret, meetingNumber, role, iat, exp) {
 	  exp:		exp
 	}
 
+	
+	console.log(`DATE: ${new Date()}`);
 	console.log(`iat: ${iat}`);
 	console.log(`exp: ${exp}`);
 	console.log(`skdKey: ${sdkKey}`);
