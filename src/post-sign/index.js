@@ -45,19 +45,13 @@ function generateSignature(sdkKey, sdkSecret, meetingNumber, role, iat, exp) {
 	  exp:		exp
 	}
 
-	console.log(`iat: ${iat}`);
-	console.log(`exp: ${exp}`);
-	console.log(`skdKey: ${sdkKey}`);
-	console.log(`skdSecret: ${sdkSecret}`);
-	console.log(`meetingNumber: ${meetingNumber}`);
-	console.log(`role: ${role}`);
-
-  
 	const sHeader = JSON.stringify(oHeader);
 	const sPayload = JSON.stringify(oPayload);
-	console.log(`sHeader: ${sHeader}`);
-	console.log(`sPayload: ${sPayload}`);
 
 	const sdkJWT = KJUR.jws.JWS.sign('HS256', sHeader, sPayload, sdkSecret);
+
+	console.log(`sHeader: ${sHeader}`);
+	console.log(`sPayload: ${sPayload}`);
+	console.log(`sdkSecret: ${sdkSecret}`);
 	return sdkJWT
 }
