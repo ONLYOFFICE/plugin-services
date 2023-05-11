@@ -22,7 +22,12 @@ exports.handler = async function(event, context) {
 		return "Invalid body";
 	}
 	meet_number	= data["meet_number"];
+	console.log(`Meet number: ${meet_number}`);
 	role_id		= data["role_id"];
+	console.log(`Role id: ${role_id}`);
+	console.log(`client id: ${client_id}`);
+	console.log(`secret id: ${secret_id}`);
+
 
 	if (client_id && secret_id && meet_number && role_id != undefined) {
 		return generateSignature(client_id, secret_id, meet_number, role_id);
