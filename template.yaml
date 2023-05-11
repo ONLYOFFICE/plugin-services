@@ -22,7 +22,8 @@ Resources:
   postProxyFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/post-proxy/index.handler
+      CodeUri: src/post-proxy
+      Handler: index.handler
       Runtime: nodejs18.x
       Architectures:
       - x86_64
@@ -42,7 +43,8 @@ Resources:
   postSignFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/post-sign/index.handler
+      CodeUri: src/post-sign
+      Handler: index.handler
       Runtime: nodejs18.x
       Architectures:
       - x86_64
@@ -66,7 +68,8 @@ Resources:
   postOAuthFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/post-oauth/index.handler
+      CodeUri: src/post-oauth
+      Handler: index.handler
       Runtime: nodejs18.x
       Architectures:
       - x86_64
