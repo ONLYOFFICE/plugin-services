@@ -22,12 +22,7 @@ exports.handler = async function(event, context) {
 		return "Invalid body";
 	}
 	meet_number	= data["meet_number"];
-	console.log(`Meet number: ${meet_number}`);
 	role_id		= data["role_id"];
-	console.log(`Role id: ${role_id}`);
-	console.log(`client id: ${client_id}`);
-	console.log(`secret id: ${secret_id}`);
-
 
 	if (client_id && secret_id && meet_number && role_id != undefined) {
 		return generateSignature(client_id, secret_id, meet_number, role_id);
@@ -49,9 +44,20 @@ function generateSignature(sdkKey, sdkSecret, meetingNumber, role) {
 	  iat:		iat,
 	  exp:		exp
 	}
+
+	console.log(`iat: ${iat}`);
+	console.log(`exp: ${exp}`);
+	console.log(`skdKey: ${sdkKey}`);
+	console.log(`skdSecret: ${sdkSecret}`);
+	console.log(`meetingNumber: ${meetingNumber}`);
+	console.log(`role: ${role}`);
+
   
-	const sHeader = JSON.stringify(oHeader)
-	const sPayload = JSON.stringify(oPayload)
-	const sdkJWT = KJUR.jws.JWS.sign('HS256', sHeader, sPayload, sdkSecret)
+	const sHeader = JSON.stringify(oHeader);
+	const sPayload = JSON.stringify(oPayload);
+	console.log(`sHeader: ${sHeader}`);
+	console.log(`sPayload: ${sPayload}`);
+
+	const sdkJWT = KJUR.jws.JWS.sign('HS256', sHeader, sPayload, sdkSecret);
 	return sdkJWT
 }
