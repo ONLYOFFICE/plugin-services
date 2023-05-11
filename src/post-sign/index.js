@@ -27,7 +27,7 @@ exports.handler = async function(event, context) {
 	exp			= data["exp"];
 
 	if (client_id && secret_id && meet_number && role_id != undefined && iat != undefined && exp != undefined) {
-		return generateSignature(client_id, secret_id, meet_number, role_id);
+		return generateSignature(client_id, secret_id, meet_number, role_id, iat, exp);
 	}
 	else
 		return "Failed! Check your posted data.";
