@@ -31,7 +31,7 @@ exports.handler = async function(event, context) {
 		return "Failed! Check your posted data.";
 }
 
-function generateSignature(sdkKey, sdkSecret, meetingNumber, role, iat, exp) {
+function generateSignature(sdkKey, sdkSecret, meetingNumber, role) {
 
 	const iat		= Math.round(new Date().getTime() / 1000) - 30;
   	const exp		= iat + 60 * 60 * 2;
