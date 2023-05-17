@@ -30,7 +30,7 @@ exports.handler = async function(event, context) {
 				}
 				console.log('Target URL: ' + targetUrl);
 				if (!aURLs.find(function(url) {
-					console.log('White Url:' + url);
+					console.log('White Url:' + url.trim());
 					
 					return targetUrl.startsWith(url.trim());
 				})) {
