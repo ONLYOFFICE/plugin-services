@@ -4,30 +4,33 @@ const needle = require('needle');
 
 // Handler
 exports.handler = async function(event, context) {
-  const options = {
-		headers: {
-			"content-type": 'application/json'
-		}
-	};
     if (!event["body"]) {
 		return "Invalid body";
 	}
-	
+	let aURLs = process.env.whitelist;
+
+	// 
 	function getPromise(event) {
 		return new Promise(function(resolve) {
 			try {
-				let data = JSON.parse(event["body"]);
-				options["headers"]["Authorization"] = data["Authorization"];
-				let method = data["method"];
-				let targetUrl = "https://api.zoom.us/v2/users/" + data["endPoint"];
-		
-				delete data["endPoint"];
-				delete data["Authorization"];
-				delete data["method"];
-				
-				if (!targetUrl || !method || !options["headers"]["Authorization"]) {
-					resolve("Error of request");
+				let oParsedData = JSON.parse(req.body);
+
+				let method		= oParsedData["method"] || "GET";
+				let targetUrl	= oParsedData["target"];
+				let data		= oParsedData["data"] || {};
+				let options		= {
+					"headers": oParsedData["headers"] || {}
 				}
+				
+				if (!targetUrl) {
+					resolve("Have not target URL");
+				}
+				if (!aURLs.find(function(url) {
+					return targetUrl.startsWith(url);
+				})) {
+					resolve("Target URL isn't allowed")
+				};
+
 				needle(method, targetUrl, data, options)
 					.then((target_response) => {
 						console.log(`Status: ${target_response.statusCode}`);
