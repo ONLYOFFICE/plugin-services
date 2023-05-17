@@ -27,6 +27,9 @@ Resources:
       Runtime: nodejs18.x
       Architectures:
       - x86_64
+      Environment:
+        Variables:
+          WHITELIST: !Sub '{{resolve:secretsmanager:arn:aws:secretsmanager:us-east-1:997789372772:secret:zoomApi-LcwurZ:SecretString:whitelist}}'
       MemorySize: 128
       Timeout: 100
       Events:
@@ -58,7 +61,7 @@ Resources:
         Api:
           Type: HttpApi
           Properties:
-            Path: /sign
+            Path: /zoom/sign
             Method: POST
 
   # Each Lambda function is defined by properties:
@@ -83,7 +86,7 @@ Resources:
         Api:
           Type: HttpApi
           Properties:
-            Path: /oauth
+            Path: /zoom/oauth
             Method: POST
 
   ApplicationResourceGroup:

@@ -7,7 +7,7 @@ exports.handler = async function(event, context) {
     if (!event["body"]) {
 		return "Invalid body";
 	}
-	let aURLs = process.env.whitelist;
+	let aURLs = process.env.WHITELIST;
 
 	// 
 	function getPromise(event) {
