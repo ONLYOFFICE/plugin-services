@@ -9,6 +9,10 @@ exports.handler = async function(event, context) {
 	}
 	let aURLs = process.env.WHITELIST.split(',');
 
+	console.log("String URLS:" + process.env.WHITELIST);
+	console.log("URLS array:");
+	console.log(aURLs);
+
 	function getPromise(event) {
 		return new Promise(function(resolve) {
 			try {
@@ -24,7 +28,10 @@ exports.handler = async function(event, context) {
 				if (!targetUrl) {
 					resolve("Have not target URL");
 				}
+				console.log('Target URL: ' + targetUrl);
 				if (!aURLs.find(function(url) {
+					console.log('White Url:' + url);
+					
 					return targetUrl.startsWith(url.trim());
 				})) {
 					resolve("Target URL isn't allowed")
