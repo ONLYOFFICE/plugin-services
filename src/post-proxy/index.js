@@ -12,7 +12,7 @@ exports.handler = async function(event, context) {
 	function getPromise(event) {
 		return new Promise(function(resolve) {
 			try {
-				let oParsedData = JSON.parse(req.body);
+				let oParsedData = JSON.parse(event["body"]);
 
 				let method		= oParsedData["method"] || "GET";
 				let targetUrl	= oParsedData["target"];
