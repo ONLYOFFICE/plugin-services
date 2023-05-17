@@ -7,9 +7,8 @@ exports.handler = async function(event, context) {
     if (!event["body"]) {
 		return "Invalid body";
 	}
-	let aURLs = process.env.WHITELIST;
+	let aURLs = process.env.WHITELIST.split(',');
 
-	// 
 	function getPromise(event) {
 		return new Promise(function(resolve) {
 			try {
@@ -26,7 +25,7 @@ exports.handler = async function(event, context) {
 					resolve("Have not target URL");
 				}
 				if (!aURLs.find(function(url) {
-					return targetUrl.startsWith(url);
+					return targetUrl.startsWith(url.trim());
 				})) {
 					resolve("Target URL isn't allowed")
 				};
