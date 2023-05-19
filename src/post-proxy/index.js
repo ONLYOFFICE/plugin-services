@@ -20,7 +20,7 @@ exports.handler = async function(event, context) {
 
 				let method		= oParsedData["method"] || "GET";
 				let targetUrl	= oParsedData["target"];
-				let data		= oParsedData["data"] || {};
+				let data		= oParsedData["data"];
 				let options		= {
 					"headers": oParsedData["headers"] || {}
 				}
