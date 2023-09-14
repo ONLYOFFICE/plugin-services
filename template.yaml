@@ -22,10 +22,14 @@ Resources:
   postProxyFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/post-proxy/index.handler
+      CodeUri: src/post-proxy
+      Handler: index.handler
       Runtime: nodejs18.x
       Architectures:
       - x86_64
+      Environment:
+        Variables:
+          WHITELIST: !Sub '{{resolve:secretsmanager:arn:aws:secretsmanager:us-east-1:997789372772:secret:zoomApi-LcwurZ:SecretString:whitelist}}'
       MemorySize: 128
       Timeout: 100
       Events:
@@ -42,17 +46,47 @@ Resources:
   postSignFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/post-sign/index.handler
+      CodeUri: src/post-sign
+      Handler: index.handler
       Runtime: nodejs18.x
       Architectures:
       - x86_64
+      Environment:
+        Variables:
+          CLIENT_ID: !Sub '{{resolve:secretsmanager:arn:aws:secretsmanager:us-east-1:997789372772:secret:zoomApi-LcwurZ:SecretString:sign_client_id}}'
+          CLIENT_SECRET: !Sub '{{resolve:secretsmanager:arn:aws:secretsmanager:us-east-1:997789372772:secret:zoomApi-LcwurZ:SecretString:sign_client_secret}}'
       MemorySize: 128
       Timeout: 100
       Events:
         Api:
           Type: HttpApi
           Properties:
-            Path: /sign
+            Path: /zoom/sign
+            Method: POST
+
+  # Each Lambda function is defined by properties:
+  # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+
+  # This is a Lambda function config associated with the source code: src/post-sign/index.js
+  postOAuthFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/post-oauth
+      Handler: index.handler
+      Runtime: nodejs18.x
+      Architectures:
+      - x86_64
+      Environment:
+        Variables:
+          CLIENT_ID: !Sub '{{resolve:secretsmanager:arn:aws:secretsmanager:us-east-1:997789372772:secret:zoomApi-LcwurZ:SecretString:oauth_client_id}}'
+          CLIENT_SECRET: !Sub '{{resolve:secretsmanager:arn:aws:secretsmanager:us-east-1:997789372772:secret:zoomApi-LcwurZ:SecretString:oauth_client_secret}}'
+      MemorySize: 128
+      Timeout: 100
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            Path: /zoom/oauth
             Method: POST
 
   ApplicationResourceGroup:
