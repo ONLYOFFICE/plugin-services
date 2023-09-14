@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "plugin-services-production"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-xii49d10mx49"
+s3_prefix = "plugin-services-production"
+region = "us-east-1"
+confirm_changeset = false
+fail_on_empty_changeset = false
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
