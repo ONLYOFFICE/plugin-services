@@ -17,6 +17,7 @@ Transform:
 Resources:
   ApiGatewayApi:
     Type: AWS::Serverless::Api
+    StageName: $default
     Properties:
       Cors:
         AllowMethods: "'POST'"
