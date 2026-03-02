@@ -16,15 +16,18 @@ Transform:
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
 Resources:
   ApiGatewayApi:
-    Type: AWS::Serverless::Api
+    Type: AWS::Serverless::HttpApi
     Properties:
       StageName: $default
-      Cors:
-        AllowMethods: "'POST'"
-        AllowHeaders: "'content-type', 'authorization'"
-        AllowOrigin: "'*'"
-        MaxAge: "'0'"
-        AllowCredentials: false
+      CorsConfiguration:
+        AllowMethods:
+          - POST
+        AllowHeaders:
+          - content-type
+          - authorization
+        AllowOrigins:
+          - "*"
+        MaxAge: 0
 
   # This is a Lambda function config associated with the source code: src/post-proxy/index.js
   postProxyFunction:
