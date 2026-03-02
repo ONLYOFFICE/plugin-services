@@ -15,19 +15,15 @@ Transform:
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
 Resources:
-  ServerlessHttpApi:
-    Type: AWS::Serverless::HttpApi
+  ApiGatewayApi:
+    Type: AWS::Serverless::Api
     Properties:
-      Description: "Plugin services API with CORS"
-      CorsConfiguration:
-        AllowOrigins:
-          - "*"
-        AllowMethods:
-          - POST
-        AllowHeaders:
-          - content-type
-          - authorization
-        MaxAge: 0
+      Cors:
+        AllowMethods: "'POST'"
+        AllowHeaders: "'content-type', 'authorization'"
+        AllowOrigin: "'*'"
+        MaxAge: "'0'"
+        AllowCredentials: false
 
   # This is a Lambda function config associated with the source code: src/post-proxy/index.js
   postProxyFunction:
