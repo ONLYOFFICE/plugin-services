@@ -18,6 +18,7 @@ Resources:
   ServerlessHttpApi:
     Type: AWS::Serverless::HttpApi
     Properties:
+      Description: "Plugin services API with CORS"
       CorsConfiguration:
         AllowOrigins:
           - "*"
